@@ -1,23 +1,11 @@
 <template>
   <div id="carousel">
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
-    <column :date="hoge" :style="[columnStyle]" />
+    <column
+      v-for="date in dateList"
+      :key="date.format('YYYY-MM-DD')"
+      :date="date"
+      :style="[columnStyle, isTransition]"
+    />
 
   </div>
 </template>
@@ -46,6 +34,18 @@ export default {
     displayDays () {
       return this.$store.state.displayDays;
     },
+    currentDate () {
+      return this.$store.state.currentDate;
+    },
+    dateList: function () {
+      let i = -this.displayDays;
+      let result = [];
+      while (i < this.displayDays * 2) {
+        result.push(this.currentDate.clone().add(i, 'days'));
+        i++;
+      }
+      return result;
+    },
     columnStyle: function () {
       return {
         width: 100 / this.displayDays + '%',
@@ -54,6 +54,13 @@ export default {
           translate3d(${this.currentNum * (-100)}%, 0, 0)`
       }
     },
+    isTransition: function () {
+      if (this.isAnimating) {
+        return {transition: 'all 0.2s ease-out'}
+      } else {
+        return {transition: 'none'}
+      }
+    }
   },
   created: function () {
     // 前後に用意してある分ずらす
