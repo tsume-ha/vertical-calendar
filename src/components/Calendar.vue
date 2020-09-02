@@ -1,11 +1,18 @@
 <template>
-    <div class="row">
+    <div>
+        <controller />
         calendar
     </div>
 </template>
 
 <script>
+import controller from '@/components/controller.vue'
+
 export default {
-    name: 'Calendar'
+    name: 'Calendar',
+    components: {
+        controller,
+
+    }
 }
 </script>
