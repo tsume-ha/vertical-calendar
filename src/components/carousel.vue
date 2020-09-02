@@ -1,5 +1,11 @@
 <template>
-  <div id="carousel">
+  <div id="carousel"
+    @mousedown="onTouchStart" @touchstart="onTouchStart"
+    @mousemove="onTouchMove" @touchmove="onTouchMove"
+    @mouseup="onTouchEnd" @touchend="onTouchEnd"
+    @mouseleave="onTouchEnd" @touchleave="onTouchEnd"
+    @transitionend="onTransitionEnd"
+    >
     <column
       v-for="date in dateList"
       :key="date.format('YYYY-MM-DD')"
@@ -11,7 +17,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import column from './column.vue';
 export default {
   name: 'carousel',
@@ -24,7 +29,6 @@ export default {
       diffX: 0,
       currentNum: 0,
       isAnimating: true,
-      hoge: moment('2020-09-02')
     }
   },
   computed: {
@@ -66,6 +70,43 @@ export default {
     // 前後に用意してある分ずらす
     this.currentNum = this.displayDays;
   },
+  methods: {
+    getClientX (e) {
+      // タッチデバイスとマウスデバイスの差分吸収
+      if ('ontouchstart' in window) {
+        // タッチデバイスのとき
+        return e.touches[0].clientX;
+      } else {
+        // マウスデバイスのとき
+        return e.clientX;
+      }
+    },
+    onTouchStart (e) {
+      this.isAnimating = false;
+      this.startX = this.getClientX(e);
+    },
+    onTouchMove (e) {
+      if (this.startX == null) {
+        return;
+      }
+      this.diffX = this.getClientX(e) - this.startX;
+    },
+    onTouchEnd () {
+      this.isAnimating = true;
+      this.startX = null;
+      const columnwidth = this.$el.clientWidth / this.displayDays;
+      const diffDays = -1 * Math.round(this.diffX / columnwidth);
+      this.currentNum += diffDays;
+      this.diffX = 0;
+    },
+    onTransitionEnd () {
+      this.isAnimating = false;
+      const diffDays = this.currentNum - this.displayDays;
+      const newDate = this.currentDate.clone().add(diffDays, 'days');
+      this.$store.commit('updateDate', newDate);
+      this.currentNum = this.displayDays;
+    },
+  }
 }
 </script>
 
