@@ -1,7 +1,7 @@
 <template>
     <div>
         <controller />
-        <div id="table" class="row">
+        <div id="table">
             <leftside />
             <carousel />
         </div>

@@ -1,5 +1,5 @@
 <template>
-  <div id="calendar-leftside">
+  <div id="leftside">
     <div class="date"></div>
     <template v-for="h in timeRange">
       <div class="time" :class="h+'00'" :key="h+'00'">
@@ -24,7 +24,7 @@ export default {
 
 <style scoped>
 @import "../assets/table-cell.css";
-#calendar-leftside{
+#leftside{
   border-left: 1px solid #eee;
   border-right: 1px solid #eee;
 }
