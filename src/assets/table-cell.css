@@ -1,0 +1,25 @@
+@charset "utf-8";
+/* 表内セルの高さ・ボーダー指定 */
+.date, .time{
+    border-top: 1px solid #eee;
+}
+.time:last-child{
+  border-bottom: 1px solid #eee;
+}
+.date{
+  height: 3.5rem;
+  text-align: center;
+  line-height: 1.5rem;
+  font-size: 12px;
+  padding: 0.25rem auto;
+}
+.date.sunday{
+  background-color: #ffc6c6;
+}
+.date.saturday{
+  background-color: #aae7ff;
+}
+.time{
+  height: 20px;
+}
+  

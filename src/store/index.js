@@ -12,10 +12,10 @@ export default new Vuex.Store({
     timeEnd: 24,
   },
   getters: {
-    timeRange: function () {
-      let t = this.timeStart;
+    timeRange: function (state) {
+      let t = state.timeStart;
       let result = [];
-      while (t < this.timeEnd) {
+      while (t < state.timeEnd) {
         result.push(t);
         t++;
       }
