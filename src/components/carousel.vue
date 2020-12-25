@@ -32,16 +32,13 @@ export default {
     }
   },
   computed: {
-    timeRange () {
-      return this.$store.getters.timeRange;
-    },
     displayDays () {
       return this.$store.state.displayDays;
     },
     currentDate () {
       return this.$store.state.currentDate;
     },
-    dateList: function () {
+    dateList () {
       let i = -this.displayDays;
       let result = [];
       while (i < this.displayDays * 2) {
@@ -50,23 +47,23 @@ export default {
       }
       return result;
     },
-    columnStyle: function () {
+    columnStyle () {
       return {
         width: 100 / this.displayDays + '%',
         transform: `
           translate3d(${this.diffX}px, 0, 0)
           translate3d(${this.currentNum * (-100)}%, 0, 0)`
-      }
+      };
     },
-    isTransition: function () {
+    isTransition () {
       if (this.isAnimating) {
-        return {transition: 'all 0.2s ease-out'}
+        return {transition: 'all 0.2s ease-out'};
       } else {
-        return {transition: 'none'}
+        return {transition: 'none'};
       }
     }
   },
-  created: function () {
+  created () {
     // 前後に用意してある分ずらす
     this.currentNum = this.displayDays;
   },
@@ -114,9 +111,7 @@ export default {
 #carousel{
   white-space: nowrap;
   overflow: hidden;
-  width: 100%;
   box-sizing: border-box;
-  position: relative;
   font-size: 0;/* inline-blockのとき隙間が空くので指定 */
 }
 #carousel .column{

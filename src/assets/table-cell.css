@@ -13,12 +13,6 @@
   font-size: 12px;
   padding: 0.25rem auto;
 }
-.date.sunday{
-  background-color: #ffc6c6;
-}
-.date.saturday{
-  background-color: #aae7ff;
-}
 .time{
   height: 20px;
 }
